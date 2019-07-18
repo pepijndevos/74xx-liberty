@@ -5,3 +5,7 @@ all: ../74series.lib VexRiscv.stat picorv32.stat shifter64.stat smartbextdep.sta
 
 %.stat: ../benchmarks/%.v ../74series.lib ../74_models.v ../74_adder.v ../74_cmp.v ../74_eq.v ../74_dffe.v ../74_mux.v ../synth_74.ys
 	yosys -q -s ../synth_74.ys -p "tee -o $@ stat" $<
+
+%.stat: ../benchmarks/%.vhd ../74series.lib ../74_models.v ../74_adder.v ../74_cmp.v ../74_eq.v ../74_dffe.v ../74_mux.v ../synth_74.ys
+	ghdl -a $<
+	yosys -m ghdl -q -p "ghdl $*; script ../synth_74.ys; tee -o $@ stat"
