@@ -5,7 +5,7 @@ all: counter.net
 %.json: ../benchmarks/%.v ../74series.lib ../74_models.v ../74_adder.v ../74_dffe.v ../74_mux.v ../synth_74.ys
 	yosys -q -s ../synth_74.ys -p "write_json $@" $<
 
-%.json: ../benchmarks/%.vhd ../74series.lib ../74_models.v ../74_adder.v ../74_dffe.v ../74_mux.v ../74_cmp.v ../synth_74.ys
+%.json: ../benchmarks/%.vhd ../74series.lib ../74_models.v ../74_adder.v ../74_dffe.v ../74_mux.v ../synth_74.ys
 	ghdl -a $<
 	yosys -m ghdl -q -p "ghdl $*; script ../synth_74.ys; write_json $@"
 
